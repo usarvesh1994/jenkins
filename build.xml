@@ -1,0 +1,45 @@
+<project name="SampleUnitTest" default="run-tests" basedir=".">
+    <property name="src.dir" value="src" />
+    <property name="test.dir" value="test" />
+    <property name="build.dir" value="build" />
+    <property name="lib.dir" value="lib" /> 
+
+    <path id="classpath">
+        <pathelement location="${build.dir}" />
+         <pathelement location="${lib.dir}/junit.jar" />
+    <pathelement location="${lib.dir}/hamcrest.jar" />
+    </path>
+
+    <target name="init">
+        <mkdir dir="${build.dir}" />
+        <mkdir dir="${build.dir}/reports" />
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${build.dir}" />  
+         <javac srcdir="${test.dir}" destdir="${build.dir}" includeantruntime="false">
+        <classpath refid="classpath"/>
+    </javac>
+    </target>
+
+  
+
+
+    <target name="run-tests" depends="compile">
+        <junit printsummary="yes" haltonfailure="no">
+            <classpath refid="classpath" />
+            <!-- Define the formatter for XML report -->
+            <formatter type="xml" />
+            <test name="com.example.CalculatorTest" />
+        </junit>
+
+        <!-- Generate XML report -->
+        <junitreport todir="${build.dir}/reports">
+            <fileset dir="${build.dir}">
+                <include name="**/TEST-*.xml" />
+            </fileset>
+            <!-- Specify the format for the report -->
+            <report format="frames" todir="${build.dir}/reports" />
+        </junitreport>
+    </target>
+</project>
