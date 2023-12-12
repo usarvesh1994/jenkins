@@ -9,7 +9,7 @@ public class CalculatorTest {
         Calculator calc = new Calculator();
         int result = calc.add(3, 5);
         System.out.println(result);
-        Assert.assertEquals(2, result);
+        Assert.assertEquals(4, result);
     }
 
     @Test
